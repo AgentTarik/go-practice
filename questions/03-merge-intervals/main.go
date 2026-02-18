@@ -39,43 +39,18 @@ func merge(intervals [][2]int) [][2]int {
 		return intervals[i][0] < intervals[j][0]
 	})
 
-	intervalsLength := len(intervals)
-	result := [][2]int{}
+	result := [][2]int{intervals[0]}
 
-	for i := 0; i < intervalsLength; i++ {
-		resultInterval := intervals[i]
-		for true {
-			joining := resultInterval
-
-			if (i + 1) < intervalsLength {
-				joining = joiner(joining, intervals[i+1])
-
-				if !(joining[0] == 1 && joining[1] == 0) {
-					resultInterval = joining
-					i++
-				} else {
-					break
-				}
-			} else {
-				break
-			}
+	for _, iv := range intervals[1:] {
+		last := &result[len(result)-1]
+		if iv[0] <= last[1] {
+			last[1] = max(last[1], iv[1])
+		} else {
+			result = append(result, iv)
 		}
-		result = append(result, resultInterval)
 	}
 
 	return result
-}
-
-func joiner(actual, next [2]int) [2]int {
-	res := [2]int{1, 0}
-	if next[0] >= actual[0] && next[0] <= actual[1] {
-		if actual[1] > next[1] {
-			res = [2]int{actual[0], actual[1]}
-		} else {
-			res = [2]int{actual[0], next[1]}
-		}
-	}
-	return res
 }
 
 func main() {
