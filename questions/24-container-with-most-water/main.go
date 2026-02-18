@@ -1,0 +1,58 @@
+/*
+Container With Most Water (Two Pointers)
+
+You are given an integer array height of length n. There are n vertical lines drawn
+such that the two endpoints of the i-th line are (i, 0) and (i, height[i]).
+Find two lines that together with the x-axis form a container that holds the most water.
+Return the maximum amount of water a container can store.
+You may not slant the container.
+
+Example 1:
+  Input:  height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+  Output: 49  (between index 1 and 8: min(8,7) * 7 = 49)
+
+Example 2:
+  Input:  height = [1, 1]
+  Output: 1
+
+Constraints:
+  - 2 <= n <= 10^5
+  - 0 <= height[i] <= 10^4
+
+Asked by: Amazon, Google, Facebook, Bloomberg
+*/
+package main
+
+import (
+	"fmt"
+	"practice/testutil"
+)
+
+func maxArea(height []int) int {
+	// TODO: implement
+	return 0
+}
+
+func main() {
+	type testCase struct {
+		height   []int
+		expected int
+	}
+
+	cases := []testCase{
+		{[]int{1, 8, 6, 2, 5, 4, 8, 3, 7}, 49},
+		{[]int{1, 1}, 1},
+		{[]int{4, 3, 2, 1, 4}, 16},
+		{[]int{1, 2, 1}, 2},
+		{[]int{1, 2, 4, 3}, 4},
+		{[]int{2, 3, 10, 5, 7, 8, 9}, 36},
+	}
+
+	for _, tc := range cases {
+		testutil.Run(
+			fmt.Sprintf("maxArea(%v)", tc.height),
+			tc.expected,
+			maxArea(tc.height),
+		)
+	}
+}
