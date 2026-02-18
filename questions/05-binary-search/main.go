@@ -5,16 +5,19 @@ Given a sorted array of integers and a target value, return the index of the tar
 If the target is not found, return -1. Must run in O(log n) time.
 
 Example 1:
-  Input:  nums = [-1, 0, 3, 5, 9, 12], target = 9
-  Output: 4
+
+	Input:  nums = [-1, 0, 3, 5, 9, 12], target = 9
+	Output: 4
 
 Example 2:
-  Input:  nums = [-1, 0, 3, 5, 9, 12], target = 2
-  Output: -1
+
+	Input:  nums = [-1, 0, 3, 5, 9, 12], target = 2
+	Output: -1
 
 Example 3:
-  Input:  nums = [5], target = 5
-  Output: 0
+
+	Input:  nums = [5], target = 5
+	Output: 0
 
 Constraints:
   - 1 <= nums.length <= 10^4
@@ -29,10 +32,27 @@ import (
 	"practice/testutil"
 )
 
+// {-1, 0, 3, 5, 9, 12}, 9
+// assume that middle number is in right
 func binarySearch(nums []int, target int) int {
-	// TODO: implement
+	wStart := 0
+	wEnd := len(nums) - 1
+	for wStart <= wEnd {
+		middle := getMiddle(wStart, wEnd)
+		if nums[middle] == target {
+			return middle
+		}
+		if target < nums[middle] {
+			wEnd = middle - 1
+		} else {
+			wStart = middle + 1
+		}
+	}
+
 	return -1
 }
+
+func getMiddle(wStart int, wEnd int) int { return wStart + (wEnd-wStart)/2 }
 
 func main() {
 	type testCase struct {
@@ -43,9 +63,10 @@ func main() {
 
 	cases := []testCase{
 		{[]int{-1, 0, 3, 5, 9, 12}, 9, 4},   // found in middle
+		{[]int{1, 3, 4, 5, 7, 9, 11}, 4, 2}, // found in the middle
 		{[]int{-1, 0, 3, 5, 9, 12}, 2, -1},  // not found
-		{[]int{5}, 5, 0},                     // single element: found
-		{[]int{5}, 6, -1},                    // single element: not found
+		{[]int{5}, 5, 0},                    // single element: found
+		{[]int{5}, 6, -1},                   // single element: not found
 		{[]int{1, 3, 5, 7, 9, 11}, 1, 0},    // leftmost element
 		{[]int{1, 3, 5, 7, 9, 11}, 11, 5},   // rightmost element
 		{[]int{1, 3, 5, 7, 9, 11}, 0, -1},   // less than all elements
