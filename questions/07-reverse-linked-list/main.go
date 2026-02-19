@@ -4,16 +4,19 @@ Reverse Linked List
 Given the head of a singly linked list, reverse the list, and return the reversed list.
 
 Example 1:
-  Input:  [1, 2, 3, 4, 5]
-  Output: [5, 4, 3, 2, 1]
+
+	Input:  [1, 2, 3, 4, 5]
+	Output: [5, 4, 3, 2, 1]
 
 Example 2:
-  Input:  [1, 2]
-  Output: [2, 1]
+
+	Input:  [1, 2]
+	Output: [2, 1]
 
 Example 3:
-  Input:  []
-  Output: []
+
+	Input:  []
+	Output: []
 
 Constraints:
   - The number of nodes in the list is in the range [0, 5000]
@@ -34,8 +37,21 @@ type ListNode struct {
 }
 
 func reverseList(head *ListNode) *ListNode {
-	// TODO: implement
-	return nil
+	if head == nil || head.Next == nil {
+		return head
+	}
+	nextNode := head.Next
+	head.Next = nil
+
+	for nextNode.Next != nil {
+		temp1 := nextNode.Next
+		temp2 := nextNode
+		nextNode.Next = head
+		head = temp2
+		nextNode = temp1
+	}
+	nextNode.Next = head
+	return nextNode
 }
 
 // helpers
