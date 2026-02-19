@@ -7,16 +7,19 @@ splicing together the nodes of the first two lists.
 Return the head of the merged linked list.
 
 Example 1:
-  Input:  list1 = [1, 2, 4], list2 = [1, 3, 4]
-  Output: [1, 1, 2, 3, 4, 4]
+
+	Input:  list1 = [1, 2, 4], list2 = [1, 3, 4]
+	Output: [1, 1, 2, 3, 4, 4]
 
 Example 2:
-  Input:  list1 = [], list2 = []
-  Output: []
+
+	Input:  list1 = [], list2 = []
+	Output: []
 
 Example 3:
-  Input:  list1 = [], list2 = [0]
-  Output: [0]
+
+	Input:  list1 = [], list2 = [0]
+	Output: [0]
 
 Constraints:
   - The number of nodes in both lists is in the range [0, 50]
@@ -38,8 +41,27 @@ type ListNode struct {
 }
 
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-	// TODO: implement
-	return nil
+	joinedLists := &ListNode{}
+	result := joinedLists
+
+	for list1 != nil && list2 != nil {
+		if list1.Val <= list2.Val {
+			joinedLists.Next = list1
+			list1 = list1.Next
+		} else {
+			joinedLists.Next = list2
+			list2 = list2.Next
+		}
+		joinedLists = joinedLists.Next
+	}
+
+	if list1 == nil {
+		joinedLists.Next = list2
+	} else {
+		joinedLists.Next = list1
+	}
+
+	return result.Next
 }
 
 // helpers
