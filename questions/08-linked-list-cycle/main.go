@@ -6,16 +6,19 @@ A cycle exists if some node in the list can be reached again by continuously fol
 the next pointer. Return true if there is a cycle, false otherwise.
 
 Example 1:
-  Input:  [3, 2, 0, -4], cycle at position 1
-  Output: true  (tail connects to node at index 1)
+
+	Input:  [3, 2, 0, -4], cycle at position 1
+	Output: true  (tail connects to node at index 1)
 
 Example 2:
-  Input:  [1, 2], cycle at position 0
-  Output: true  (tail connects to node at index 0)
+
+	Input:  [1, 2], cycle at position 0
+	Output: true  (tail connects to node at index 0)
 
 Example 3:
-  Input:  [1], no cycle
-  Output: false
+
+	Input:  [1], no cycle
+	Output: false
 
 Constraints:
   - The number of nodes is in the range [0, 10^4]
@@ -37,7 +40,18 @@ type ListNode struct {
 }
 
 func hasCycle(head *ListNode) bool {
-	// TODO: implement
+	if head == nil {
+		return false
+	}
+	p1 := head
+	p2 := head
+	for p2.Next != nil && p2.Next.Next != nil {
+		p1 = p1.Next
+		p2 = p2.Next.Next
+		if p1 == p2 {
+			return true
+		}
+	}
 	return false
 }
 
@@ -68,9 +82,9 @@ func main() {
 	}
 
 	cases := []testCase{
-		{[]int{3, 2, 0, -4}, 1, true},  // tail connects to index 1
-		{[]int{1, 2}, 0, true},          // tail connects to index 0
-		{[]int{1}, -1, false},           // single node, no cycle
+		{[]int{3, 2, 0, -4}, 1, true},     // tail connects to index 1
+		{[]int{1, 2}, 0, true},            // tail connects to index 0
+		{[]int{1}, -1, false},             // single node, no cycle
 		{[]int{1, 2, 3, 4, 5}, -1, false}, // no cycle
 		{[]int{1, 2, 3, 4, 5}, 4, true},   // tail connects to itself
 	}
